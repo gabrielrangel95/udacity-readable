@@ -1,18 +1,40 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { Creators as categoriesCreators } from '../../redux/ducks/Categories';
 import './Root.css';
 
-const { Header, Content, Footer, Sider } = Layout;
+
+const {
+  Header,
+  Content,
+  Footer,
+  Sider,
+} = Layout;
 const SubMenu = Menu.SubMenu;
 
-class Root extends React.Component {
+class Root extends Component {
+  static propTypes = {
+    categoriesRequest: PropTypes.func.isRequired,
+  }
+
   state = {
     collapsed: false,
   };
+
+  async componentDidMount() {
+    console.log(this.props);
+    await this.props.categoriesRequest();
+  }
+
   onCollapse = (collapsed) => {
     console.log(collapsed);
     this.setState({ collapsed });
   }
+
   render() {
     return (
       <Layout style={{ minHeight: '100vh' }}>
@@ -72,4 +94,13 @@ class Root extends React.Component {
   }
 }
 
-export { Root };
+const mapStateToProps = state => ({
+  categories: state.categories.categories,
+  loading: state.categories.categories,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(categoriesCreators, dispatch);
+
+const RootWithRouter = withRouter(connect(mapStateToProps, mapDispatchToProps)(Root));
+export { RootWithRouter as Root };
