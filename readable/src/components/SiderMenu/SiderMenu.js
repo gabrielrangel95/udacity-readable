@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu } from 'antd';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Creators as categoriesCreators } from '../../redux/ducks/Categories';
@@ -10,49 +10,50 @@ import './SiderMenu.css';
 const { Sider } = Layout;
 const fullLogo = require('../../resources/img/full_logo.svg');
 const shortLogo = require('../../resources/img/shor_logo.svg');
-const marvelLogo = require('../../resources/img/avengers_logo.svg');
-const dcLogo = require('../../resources/img/dc_comics_logo.svg');
+const marvelLogo = require('../../resources/img/marvel.svg');
+const dcLogo = require('../../resources/img/dc.svg');
+const discussLogo = require('../../resources/img/di_logo.svg');
 
 class SiderMenu extends Component {
-  // static propTypes = {
-  //   history: PropTypes.shape({
-  //     push: PropTypes.func.isRequired,
-  //   }).isRequired,
-  //   collapsed: PropTypes.bool.isRequired,
-  //   categoriesRequest: PropTypes.func.isRequired,
-  //   categories: PropTypes.arrayOf(Categorie).isRequired,
-  // }
-  state = {
-    categories: [],
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
+    collapsed: PropTypes.bool.isRequired,
+    getCategoriesRequest: PropTypes.func.isRequired,
+    categories: PropTypes.shape({
+      data: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string,
+        path: PropTypes.string,
+      })),
+      loading: PropTypes.bool,
+    }).isRequired,
   }
+
 
   async componentDidMount() {
     this.props.getCategoriesRequest();
     console.log(this.props);
   }
 
-  async componentWillReceiveProps(nextprops) {
-    console.log(nextprops);
-    const { categories } = nextprops.categories.data;
-    await this.setState({ categories });
-  }
-
   handleClick = (e) => {
-    this.props.history.push(`/${e.key}`);
+    const path = e.key;
+    console.log(path);
+    this.props.history.push(`${path}`);
   }
 
   categorieItemImage = (item) => {
-    if (item.name === 'dc') {
+    if (item.path === 'dc') {
       return (
         <img src={dcLogo} className="img-categorie" alt="dc" />
       );
-    } else if (item.name === 'marvel') {
+    } else if (item.path === 'marvel') {
       return (
         <img src={marvelLogo} className="img-categorie" alt="marvel" />
       );
     }
     return (
-      <Icon type="message" />
+      <img src={discussLogo} className="img-categorie" alt="marvel" />
     );
   }
 
@@ -77,11 +78,11 @@ class SiderMenu extends Component {
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['avisos']} onClick={this.handleClick}>
           {
             data.map(item => (
-              <Menu.Item key={item.path}>
+              <Menu.Item key={item.path} className="menuItem">
                 {
                   this.categorieItemImage(item)
                 }
-                <span>{item.name}</span>
+                <span className="menuItemText">{item.name}</span>
               </Menu.Item>
             ))
           }
