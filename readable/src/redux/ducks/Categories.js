@@ -1,52 +1,44 @@
 export const Types = {
-  CATEGORIES_REQUEST: 'categories/CATEGORIES_REQUEST',
-  CATEGORIES_SUCCESS: 'categories/CATEGORIES_SUCCESS',
-  CATEGORIES_FAILURE: 'categories/CATEGORIES_FAILURE',
+  GET_REQUEST: 'categories/GET_REQUEST',
+  GET_SUCCESS: 'categories/GET_SUCCESS',
+  GET_FAILURE: 'categories/GET_FAILURE',
 };
 
 const initialState = {
-  categories: [],
+  data: [],
   loading: false,
-  errorOnGet: null,
+  error: null,
 };
 
-export default function categories(state = initialState, action) { // reducer
+export default function categories(state = initialState, action) {
   switch (action.type) {
-    case Types.CATEGORIES_REQUEST:
+    case Types.GET_REQUEST:
       return { ...state, loading: true };
-    case Types.CATEGORIES_SUCCESS:
-      return {
-        categories: action.payload.categories,
-        loading: false,
-        errorOnGet: null,
-      };
-    case Types.CATEGORIES_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        errorOnGet: action.payload.errorMessage,
-      };
+    case Types.GET_SUCCESS:
+      return { data: action.payload.data, loading: false, error: null };
+    case Types.GET_FAILURE:
+      return { ...state, loading: false, error: action.payload.error };
     default:
       return state;
   }
 }
 
-export const Creators = { // actions
-  categoriesRequest: () => ({
-    type: Types.CATEGORIES_REQUEST,
+export const Creators = {
+  getCategoriesRequest: () => ({
+    type: Types.GET_REQUEST,
   }),
-  categoriesSuccess: () => ({
-    type: Types.CATEGORIES_SUCCESS,
+
+  getCategoriesSuccess: data => ({
+    type: Types.GET_SUCCESS,
     payload: {
-      categories,
-    },
-  }),
-  categoriesError: (message = 'Error loading feed') => ({
-    type: Types.CATEGORIES_FAILURE,
-    payload: {
-      message,
+      data,
     },
   }),
 
+  getCategoriesFailure: error => ({
+    type: Types.GET_FAILURE,
+    payload: {
+      error,
+    },
+  }),
 };
-
