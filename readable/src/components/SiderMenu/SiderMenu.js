@@ -10,32 +10,54 @@ import './SiderMenu.css';
 const { Sider } = Layout;
 const fullLogo = require('../../resources/img/full_logo.svg');
 const shortLogo = require('../../resources/img/shor_logo.svg');
-
-class Categorie {
-  name: string,
-  path: string,
-};
+const marvelLogo = require('../../resources/img/avengers_logo.svg');
+const dcLogo = require('../../resources/img/dc_comics_logo.svg');
 
 class SiderMenu extends Component {
-  static propTypes = {
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    collapsed: PropTypes.bool.isRequired,
-    categoriesRequest: PropTypes.func.isRequired,
-    categories: PropTypes.arrayOf(Categorie).isRequired,
+  // static propTypes = {
+  //   history: PropTypes.shape({
+  //     push: PropTypes.func.isRequired,
+  //   }).isRequired,
+  //   collapsed: PropTypes.bool.isRequired,
+  //   categoriesRequest: PropTypes.func.isRequired,
+  //   categories: PropTypes.arrayOf(Categorie).isRequired,
+  // }
+  state = {
+    categories: [],
   }
 
   async componentDidMount() {
-    await this.props.categoriesRequest();
+    this.props.getCategoriesRequest();
     console.log(this.props);
+  }
+
+  async componentWillReceiveProps(nextprops) {
+    console.log(nextprops);
+    const { categories } = nextprops.categories.data;
+    await this.setState({ categories });
   }
 
   handleClick = (e) => {
     this.props.history.push(`/${e.key}`);
   }
 
+  categorieItemImage = (item) => {
+    if (item.name === 'dc') {
+      return (
+        <img src={dcLogo} className="img-categorie" alt="dc" />
+      );
+    } else if (item.name === 'marvel') {
+      return (
+        <img src={marvelLogo} className="img-categorie" alt="marvel" />
+      );
+    }
+    return (
+      <Icon type="message" />
+    );
+  }
+
   render() {
+    const { data } = this.props.categories;
     return (
       <Sider
         trigger={null}
@@ -53,21 +75,17 @@ class SiderMenu extends Component {
           }
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['avisos']} onClick={this.handleClick}>
-          <Menu.Item key="avisos">
-            <Icon type="notification" />
-            <span>Avisos</span>
-          </Menu.Item>
-          <Menu.Item key="minha-empresa">
-            <Icon type="home" />
-            <span>Minha Empresa</span>
-          </Menu.Item>
           {
-            this.props.categories.length > 0 && (
-              this.props.categories.map(categorie => (
-                <h2>{categorie.name}</h2>
-              ))
-            )
+            data.map(item => (
+              <Menu.Item key={item.path}>
+                {
+                  this.categorieItemImage(item)
+                }
+                <span>{item.name}</span>
+              </Menu.Item>
+            ))
           }
+
         </Menu>
       </Sider>
     );
@@ -75,8 +93,7 @@ class SiderMenu extends Component {
 }
 
 const mapStateToProps = state => ({
-  categories: state.categories.categories,
-  loading: state.categories.categories,
+  categories: state.categories,
 });
 
 const mapDispatchToProps = dispatch =>
