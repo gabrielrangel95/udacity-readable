@@ -8,8 +8,7 @@ import { Creators as categoriesCreators } from '../../redux/ducks/Categories';
 import './SiderMenu.css';
 
 const { Sider } = Layout;
-const fullLogo = require('../../resources/img/full_logo.svg');
-const shortLogo = require('../../resources/img/shor_logo.svg');
+const fullLogo = require('../../resources/img/full_logo.png');
 const marvelLogo = require('../../resources/img/marvel.svg');
 const dcLogo = require('../../resources/img/dc.svg');
 const discussLogo = require('../../resources/img/di_logo.svg');
@@ -19,7 +18,6 @@ class SiderMenu extends Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    collapsed: PropTypes.bool.isRequired,
     getCategoriesRequest: PropTypes.func.isRequired,
     categories: PropTypes.shape({
       data: PropTypes.arrayOf(PropTypes.shape({
@@ -62,27 +60,19 @@ class SiderMenu extends Component {
     return (
       <Sider
         trigger={null}
-        collapsible
-        collapsed={this.props.collapsed}
         className="sider-menu-layout"
       >
         <div className="logo">
-          {
-            this.props.collapsed ? (
-              <img src={shortLogo} className="short-logo" alt="Logo" />
-            ) : (
-              <img src={fullLogo} className="full-logo" alt="Logo" />
-            )
-          }
+          <img src={fullLogo} className="full-logo" alt="Logo" />
         </div>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['avisos']} onClick={this.handleClick}>
+        <Menu mode="inline" defaultSelectedKeys={['avisos']} onClick={this.handleClick} className="menu" >
           {
             data.map(item => (
-              <Menu.Item key={item.path} className="menuItem">
+              <Menu.Item key={item.path} className="menu-item">
                 {
                   this.categorieItemImage(item)
                 }
-                <span className="menuItemText">{item.name}</span>
+                <span>{item.name}</span>
               </Menu.Item>
             ))
           }
