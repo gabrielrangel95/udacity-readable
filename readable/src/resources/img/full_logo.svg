@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 169 102">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ffff64;
+        stroke: red;
+        font-size: 52px;
+        font-family: BadaBoomBB, BadaBoom BB;
+      }
+    </style>
+  </defs>
+  <g id="Group_2" data-name="Group 2" transform="translate(-233 -172)">
+    <text id="Comic_s" data-name="Comic’s" class="cls-1" transform="translate(242 173)"><tspan x="0" y="46">Comic’s</tspan></text>
+    <text id="REadable" class="cls-1" transform="translate(237 264)"><tspan x="0" y="0">REadable</tspan></text>
+  </g>
+</svg>
