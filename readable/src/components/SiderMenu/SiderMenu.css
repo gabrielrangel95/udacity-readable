@@ -1,0 +1,20 @@
+.logo {
+  height: 32px;
+  margin: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.sider-menu-layout {
+  background-image: url("../../resources/img/sider_background.svg")
+}
+
+.short-logo {
+  max-width: 40px;
+}
+
+.full-logo {
+  max-width: 100px;
+}
