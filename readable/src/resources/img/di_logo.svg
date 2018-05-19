@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #272380;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-size: 400px;
+        font-family: Arial-BoldMT, Arial;
+        font-weight: 700;
+        letter-spacing: -0.06em;
+      }
+    </style>
+  </defs>
+  <g id="Group_2" data-name="Group 2" transform="translate(-976 -304)">
+    <circle id="Ellipse_1" data-name="Ellipse 1" class="cls-1" cx="256" cy="256" r="256" transform="translate(976 304)"/>
+    <text id="DI" class="cls-2" transform="translate(1044 699)"><tspan x="0" y="0">DI</tspan></text>
+  </g>
+</svg>
