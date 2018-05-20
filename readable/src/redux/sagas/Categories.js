@@ -8,6 +8,6 @@ export function* getCategories() {
     console.log(response.data);
     yield put(CategoriesActions.getCategoriesSuccess(response.data.categories));
   } catch (err) {
-    yield put(CategoriesActions.getCategoriesFailure('Erro ao buscar dados da API'));
+    yield put(CategoriesActions.getCategoriesFailure('Error getting data'));
   }
 }
