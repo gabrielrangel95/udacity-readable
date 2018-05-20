@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import './MainContainer.css';
 import { SiderMenu } from '../';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 
 class MainContainer extends Component {
