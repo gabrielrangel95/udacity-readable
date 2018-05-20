@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import './Post.css';
 import { Creators as postsCreators } from '../../redux/ducks/Posts';
 import { PostItem, PostHeader } from '../../components';
+import { CommentsList } from './components';
 
 class Post extends Component {
   static propTypes = {
@@ -27,9 +28,6 @@ class Post extends Component {
     this.props.getSinglePostRequest(id);
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
 
   render() {
     const { selected } = this.props;
@@ -38,11 +36,16 @@ class Post extends Component {
         <h1>Post</h1>
         {
           selected && (
-            <div className="div-post-selected ">
-              <PostHeader />
-              <PostItem
-                item={selected}
-              />
+            <div>
+              <div className="div-post-selected ">
+                <PostHeader />
+                <PostItem
+                  item={selected}
+                />
+              </div>
+              <div className="div-coment-list">
+                <CommentsList />
+              </div>
             </div>
           )
         }
