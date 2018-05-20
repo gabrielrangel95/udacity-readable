@@ -6,13 +6,8 @@ import { Root } from './screens';
 const App = () => (
   <MainContainer>
     <Switch>
-      <Route
-        exact
-        path="/"
-        render={() =>
-          <Root />
-      }
-      />
+      <Route exact path="/" component={Root} />
+      <Route path="/:category" component={Root} />
     </Switch>
   </MainContainer>
 );
