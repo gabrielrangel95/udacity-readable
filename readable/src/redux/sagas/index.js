@@ -4,7 +4,7 @@ import { Types as CategoriesTypes } from '../ducks/Categories';
 import { Types as PostTypes } from '../ducks/Posts';
 
 import { getCategories } from './Categories';
-import { getPosts, createPost, sortPosts, filterCategory } from './Posts';
+import { getPosts, createPost, sortPosts, filterCategory, getSinglePost } from './Posts';
 
 export default function* rootSaga() {
   return yield all([
@@ -13,5 +13,6 @@ export default function* rootSaga() {
     takeLatest(PostTypes.CREATE_REQUEST, createPost),
     takeLatest(PostTypes.SORT_REQUEST, sortPosts),
     takeLatest(PostTypes.FILTER_CATEGORY_REQUEST, filterCategory),
+    takeLatest(PostTypes.GET_POST_REQUEST, getSinglePost),
   ]);
 }

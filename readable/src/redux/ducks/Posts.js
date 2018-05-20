@@ -9,12 +9,16 @@ export const Types = {
   SORT_SUCCESS: 'posts/SORT_SUCCESS',
   FILTER_CATEGORY_REQUEST: 'posts/FILTER_CATEGORY_REQUEST',
   FILTER_CATEGORY_SUCESS: 'posts/FILTER_CATEGORY_SUCESS',
+  GET_POST_REQUEST: 'posts/GET_POST_REQUEST',
+  GET_POST_SUCCESS: 'posts/GET_POST_SUCCESS',
+  GET_POST_FAILURE: 'posts/GET_POST_FAILURE',
 };
 
 const initialState = {
   data: [],
   loading: false,
   error: null,
+  selected: null,
 };
 
 export default function posts(state = initialState, action) {
@@ -39,6 +43,14 @@ export default function posts(state = initialState, action) {
       return { ...state, loading: true };
     case Types.FILTER_CATEGORY_SUCESS:
       return { data: action.payload.data, loading: false, error: null };
+    case Types.GET_POST_REQUEST:
+      return { ...state, loading: true };
+    case Types.GET_POST_SUCCESS:
+      return {
+        ...state, selected: action.payload.selected, loading: false, error: null,
+      };
+    case Types.GET_POST_FAILURE:
+      return { ...state, loading: false, error: action.payload.error };
     default:
       return state;
   }
@@ -105,6 +117,27 @@ export const Creators = {
     type: Types.FILTER_CATEGORY_SUCESS,
     payload: {
       data,
+    },
+  }),
+
+  getSinglePostRequest: id => ({
+    type: Types.GET_POST_REQUEST,
+    payload: {
+      id,
+    },
+  }),
+
+  getSinglePostSuccess: selected => ({
+    type: Types.GET_POST_SUCCESS,
+    payload: {
+      selected,
+    },
+  }),
+
+  getSinglePostFailure: error => ({
+    type: Types.GET_POST_FAILURE,
+    payload: {
+      error,
     },
   }),
 };

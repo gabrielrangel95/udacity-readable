@@ -65,7 +65,17 @@ export function* filterCategory(action) {
     const posts = response.data.sort(sortBy('-voteScore'));
     yield put(PostsActions.filterCategorySucess(posts));
   } catch (err) {
-    yield put(PostsActions.getPostsFailure('Error on sorting Post'));
+    yield put(PostsActions.getPostsFailure('Error on filtering Posts'));
   }
 }
 
+export function* getSinglePost(action) {
+  try {
+    const { id } = action.payload;
+    const response = yield call(api.get, `/posts/${id}`);
+    console.log(response);
+    yield put(PostsActions.getSinglePostSuccess(response.data));
+  } catch (err) {
+    yield put(PostsActions.getSinglePostFailure('Error on gettinh Post'));
+  }
+}
