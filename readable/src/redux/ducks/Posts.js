@@ -5,6 +5,8 @@ export const Types = {
   CREATE_REQUEST: 'posts/CREATE_REQUEST',
   CREATE_SUCCESS: 'posts/CREATE_SUCCESS',
   CREATE_FAILURE: 'posts/CREATE_FAILURE',
+  SORT_REQUEST: 'posts/SORT_REQUEST',
+  SORT_SUCCESS: 'posts/SORT_SUCCESS',
 };
 
 const initialState = {
@@ -27,6 +29,10 @@ export default function posts(state = initialState, action) {
       return { ...state, loading: false, error: null };
     case Types.CREATE_FAILURE:
       return { ...state, loading: false, error: action.payload.error };
+    case Types.SORT_REQUEST:
+      return { ...state, loading: true };
+    case Types.SORT_SUCCESS:
+      return { data: action.payload.data, loading: false, error: null };
     default:
       return state;
   }
@@ -65,6 +71,20 @@ export const Creators = {
     type: Types.CREATE_FAILURE,
     payload: {
       error,
+    },
+  }),
+
+  sortPostRequest: type => ({
+    type: Types.SORT_REQUEST,
+    payload: {
+      type,
+    },
+  }),
+
+  sortPostSucess: data => ({
+    type: Types.GET_SUCCESS,
+    payload: {
+      data,
     },
   }),
 };

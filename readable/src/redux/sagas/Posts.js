@@ -1,14 +1,18 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
+import sortBy from 'sort-by';
 import api from '../../services/api';
 import { Creators as PostsActions } from '../ducks/Posts';
 
 const uuidv1 = require('uuid/v1');
 
+export const getCurrentPosts = state => state.posts;
+
 export function* getPosts() {
   try {
     const response = yield call(api.get, '/posts');
-    console.log(response.data);
-    yield put(PostsActions.getPostsSuccess(response.data));
+    const posts = response.data.sort(sortBy('-voteScore'));
+    console.log(posts);
+    yield put(PostsActions.getPostsSuccess(posts));
   } catch (err) {
     yield put(PostsActions.getPostsFailure('Erro getting Posts'));
   }
@@ -29,5 +33,27 @@ export function* createPost(action) {
     yield put(PostsActions.getPostsRequest());
   } catch (err) {
     yield put(PostsActions.createPostFailure('Error on create Post'));
+  }
+}
+
+export function* sortPosts(action) {
+  try {
+    let newPosts = null;
+    const posts = yield select(getCurrentPosts);
+    console.log(posts);
+    const filter = action.payload.type;
+    if (filter === 'marvel') {
+      newPosts = posts.data.filter(post => post.path === 'marvel');
+    } else if (filter === 'dc') {
+      newPosts = posts.data.filter(post => post.path === 'dc');
+    } else if (filter === 'discussion') {
+      newPosts = posts.data.filter(post => post.path === 'discussion');
+    } else {
+      newPosts = posts.data.sort(sortBy(`-${filter}`));
+    }
+
+    yield put(PostsActions.sortPostSucess(newPosts));
+  } catch (err) {
+    yield put(PostsActions.getPostsFailure('Error on sorting Post'));
   }
 }
