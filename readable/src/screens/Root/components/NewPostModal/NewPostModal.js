@@ -25,9 +25,6 @@ class NewPostModal extends Component {
     }).isRequired,
     createPostRequest: PropTypes.func.isRequired,
   };
-  componentDidMount() {
-    console.log(this.props);
-  }
 
   handleSubmit = async (e) => {
     e.preventDefault();
