@@ -31,7 +31,6 @@ class SiderMenu extends Component {
 
   async componentDidMount() {
     this.props.getCategoriesRequest();
-    console.log(this.props);
   }
 
   handleClick = (e) => {
