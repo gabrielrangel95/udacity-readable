@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { Button, Select } from 'antd';
+import PropTypes from 'prop-types';
 import './Root.css';
 import { PostList, NewPostModal } from './components';
 import { Creators as postsCreators } from '../../redux/ducks/Posts';
@@ -10,8 +11,17 @@ import { Creators as postsCreators } from '../../redux/ducks/Posts';
 const { Option } = Select;
 
 class Root extends Component {
+  static propTypes = {
+    sortPostRequest: PropTypes.func.isRequired,
+  }
+
+
   state = {
     createModalVisible: false,
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
   }
 
   onModalCancel = () => {
