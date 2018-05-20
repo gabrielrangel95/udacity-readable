@@ -1,5 +1,13 @@
-.div-button-add-post{
+.div-buttons{
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content:  space-between;
+}
+
+.div-select-filters{
+  width: 120px;
+}
+
+.div-button-new-post{
+  align-self: flex-end;
 }
