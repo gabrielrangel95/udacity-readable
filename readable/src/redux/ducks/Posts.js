@@ -7,6 +7,8 @@ export const Types = {
   CREATE_FAILURE: 'posts/CREATE_FAILURE',
   SORT_REQUEST: 'posts/SORT_REQUEST',
   SORT_SUCCESS: 'posts/SORT_SUCCESS',
+  FILTER_CATEGORY_REQUEST: 'posts/FILTER_CATEGORY_REQUEST',
+  FILTER_CATEGORY_SUCESS: 'posts/FILTER_CATEGORY_SUCESS',
 };
 
 const initialState = {
@@ -32,6 +34,10 @@ export default function posts(state = initialState, action) {
     case Types.SORT_REQUEST:
       return { ...state, loading: true };
     case Types.SORT_SUCCESS:
+      return { data: action.payload.data, loading: false, error: null };
+    case Types.FILTER_CATEGORY_REQUEST:
+      return { ...state, loading: true };
+    case Types.FILTER_CATEGORY_SUCESS:
       return { data: action.payload.data, loading: false, error: null };
     default:
       return state;
@@ -83,6 +89,20 @@ export const Creators = {
 
   sortPostSucess: data => ({
     type: Types.GET_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  filterCategoryRequest: category => ({
+    type: Types.FILTER_CATEGORY_REQUEST,
+    payload: {
+      category,
+    },
+  }),
+
+  filterCategorySucess: data => ({
+    type: Types.FILTER_CATEGORY_SUCESS,
     payload: {
       data,
     },
