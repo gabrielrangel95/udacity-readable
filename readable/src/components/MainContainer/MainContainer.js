@@ -13,8 +13,7 @@ class MainContainer extends Component {
     return (
       <Layout className="layout">
         <SiderMenu />
-        <Layout>
-          <Header className="header-style" />
+        <Layout className="main-layout">
           <Content className="main-container">
             {children}
           </Content>

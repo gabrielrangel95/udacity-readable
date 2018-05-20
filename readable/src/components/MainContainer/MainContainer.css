@@ -2,26 +2,14 @@
   min-height: 100vh;
 }
 
-.trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color .3s;
-}
+.main-layout{
+  background-image: url("../../resources/img/main_background.jpg");
 
-.trigger:hover {
-  color: #1890ff;
-}
-
-.header-style{
-  background: white;
-  padding: 0;
 }
 
 .main-container{
   margin: 24px 16px;
   padding: 24px;
-  background: white;
+  background: rgba(255, 255, 255,0.92);
   min-height: 280;
 }
