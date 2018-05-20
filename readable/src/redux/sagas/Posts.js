@@ -57,3 +57,15 @@ export function* sortPosts(action) {
     yield put(PostsActions.getPostsFailure('Error on sorting Post'));
   }
 }
+
+export function* filterCategory(action) {
+  try {
+    const { category } = action.payload;
+    const response = yield call(api.get, `${category}/posts`);
+    const posts = response.data.sort(sortBy('-voteScore'));
+    yield put(PostsActions.filterCategorySucess(posts));
+  } catch (err) {
+    yield put(PostsActions.getPostsFailure('Error on sorting Post'));
+  }
+}
+
