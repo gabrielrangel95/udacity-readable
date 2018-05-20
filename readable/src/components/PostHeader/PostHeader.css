@@ -1,0 +1,56 @@
+
+.text-score{
+  padding-left: 12px;
+  padding-right: 12px;
+  font-weight: 700;
+  color: black;
+  font-size: 24px;
+}
+
+.icon-score{
+  font-size: 16px;
+  color: cornflowerblue;
+}
+
+.div-post-actions{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 160px;
+}
+
+.title-categorie{
+  width: 100px;
+  text-align: center;
+  font-weight: bold;
+  color:#434242;
+}
+.title-description{
+  width: 400px;
+  text-align: center;
+  font-weight: bold;
+  color: #434242;
+}
+.title-details{
+  width: 160px;
+  text-align: center;
+  font-weight: bold;
+  color:#434242;
+}
+
+.title-score{
+  width: 160px;
+  text-align: center;
+  font-weight: bold;
+  color:#434242;
+}
+
+.title-actions{
+  width: 160px;
+  text-align: center;
+  font-weight: bold;
+  color:#434242;
+}
+
+
