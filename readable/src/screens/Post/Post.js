@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import './Post.css';
 import { Creators as postsCreators } from '../../redux/ducks/Posts';
-import { PostItem } from '../../components';
+import { PostItem, PostHeader } from '../../components';
 
 class Post extends Component {
   static propTypes = {
@@ -39,6 +39,7 @@ class Post extends Component {
         {
           selected && (
             <div className="div-post-selected ">
+              <PostHeader />
               <PostItem
                 item={selected}
               />
