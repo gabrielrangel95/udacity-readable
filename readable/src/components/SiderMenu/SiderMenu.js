@@ -5,6 +5,7 @@ import { Layout, Menu } from 'antd';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Creators as categoriesCreators } from '../../redux/ducks/Categories';
+import { Creators as postsCreators } from '../../redux/ducks/Posts';
 import './SiderMenu.css';
 
 const { Sider } = Layout;
@@ -12,6 +13,7 @@ const fullLogo = require('../../resources/img/full_logo.png');
 const marvelLogo = require('../../resources/img/marvel.svg');
 const dcLogo = require('../../resources/img/dc.svg');
 const discussLogo = require('../../resources/img/di_logo.svg');
+const allPostsLogo = require('../../resources/img/all_logo.png');
 
 class SiderMenu extends Component {
   static propTypes = {
@@ -26,6 +28,8 @@ class SiderMenu extends Component {
       })),
       loading: PropTypes.bool,
     }).isRequired,
+    filterCategoryRequest: PropTypes.func.isRequired,
+    getPostsRequest: PropTypes.func.isRequired,
   }
 
 
@@ -34,9 +38,12 @@ class SiderMenu extends Component {
   }
 
   handleClick = (e) => {
-    const path = e.key;
-    console.log(path);
-    this.props.history.push(`${path}`);
+    if (e.key === 'all') {
+      this.props.getPostsRequest();
+    } else {
+      this.props.filterCategoryRequest(e.key);
+    }
+    this.props.history.push(`/${e.key}`);
   }
 
   categorieItemImage = (item) => {
@@ -48,14 +55,19 @@ class SiderMenu extends Component {
       return (
         <img src={marvelLogo} className="img-categorie" alt="marvel" />
       );
+    } else if (item.path === 'discussion') {
+      return (
+        <img src={discussLogo} className="img-categorie" alt="discussion" />
+      );
     }
     return (
-      <img src={discussLogo} className="img-categorie" alt="marvel" />
+      <img src={allPostsLogo} className="img-categorie" alt="all" />
     );
   }
 
   render() {
     const { data } = this.props.categories;
+    const allItem = { path: 'all' };
     return (
       <Sider
         trigger={null}
@@ -64,19 +76,29 @@ class SiderMenu extends Component {
         <div className="logo">
           <img src={fullLogo} className="full-logo" alt="Logo" />
         </div>
-        <Menu mode="inline" defaultSelectedKeys={['avisos']} onClick={this.handleClick} className="menu" >
-          {
-            data.map(item => (
-              <Menu.Item key={item.path} className="menu-item">
+        {
+          data ?
+            <Menu mode="inline" onSelect={this.handleClick} className="menu" >
+              <Menu.Item key="all" className="menu-item">
                 {
-                  this.categorieItemImage(item)
+                  this.categorieItemImage(allItem)
                 }
-                <span>{item.name}</span>
+                <span>All posts</span>
               </Menu.Item>
-            ))
-          }
+              {
+                data.map(item => (
+                  <Menu.Item key={item.path} className="menu-item">
+                    {
+                      this.categorieItemImage(item)
+                    }
+                    <span>{item.name}</span>
+                  </Menu.Item>
+                ))
+              }
 
-        </Menu>
+            </Menu>
+            : <span>Loading</span>
+        }
       </Sider>
     );
   }
@@ -86,8 +108,12 @@ const mapStateToProps = state => ({
   categories: state.categories,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(categoriesCreators, dispatch);
+const mapDispatchToProps = (dispatch) => {
+  const boundCategoriesCreators = bindActionCreators(categoriesCreators, dispatch);
+  const boundPostsCreatos = bindActionCreators(postsCreators, dispatch);
+  const allActionProps = { ...boundCategoriesCreators, ...boundPostsCreatos, dispatch };
+  return allActionProps;
+};
 
 const SiderMenuWithRouter = withRouter(connect(mapStateToProps, mapDispatchToProps)(SiderMenu));
 export { SiderMenuWithRouter as SiderMenu };
