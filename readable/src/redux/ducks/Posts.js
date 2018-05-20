@@ -2,6 +2,9 @@ export const Types = {
   GET_REQUEST: 'posts/GET_REQUEST',
   GET_SUCCESS: 'posts/GET_SUCCESS',
   GET_FAILURE: 'posts/GET_FAILURE',
+  CREATE_REQUEST: 'posts/CREATE_REQUEST',
+  CREATE_SUCCESS: 'posts/CREATE_SUCCESS',
+  CREATE_FAILURE: 'posts/CREATE_FAILURE',
 };
 
 const initialState = {
@@ -17,6 +20,12 @@ export default function posts(state = initialState, action) {
     case Types.GET_SUCCESS:
       return { data: action.payload.data, loading: false, error: null };
     case Types.GET_FAILURE:
+      return { ...state, loading: false, error: action.payload.error };
+    case Types.CREATE_REQUEST:
+      return { ...state, loading: true };
+    case Types.CREATE_SUCCESS:
+      return { ...state, loading: false, error: null };
+    case Types.CREATE_FAILURE:
       return { ...state, loading: false, error: action.payload.error };
     default:
       return state;
@@ -37,6 +46,23 @@ export const Creators = {
 
   getPostsFailure: error => ({
     type: Types.GET_FAILURE,
+    payload: {
+      error,
+    },
+  }),
+  createPostRequest: post => ({
+    type: Types.CREATE_REQUEST,
+    payload: {
+      post,
+    },
+  }),
+
+  createPostSuccess: () => ({
+    type: Types.CREATE_SUCCESS,
+  }),
+
+  createPostFailure: error => ({
+    type: Types.CREATE_FAILURE,
     payload: {
       error,
     },
