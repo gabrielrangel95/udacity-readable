@@ -9,3 +9,10 @@
 .div-coment-list{
   margin-top: 48px;
 }
+
+.div-button-add-comment {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
