@@ -2,6 +2,9 @@ export const Types = {
   GET_REQUEST: 'comments/GET_REQUEST',
   GET_SUCCESS: 'comments/GET_SUCCESS',
   GET_FAILURE: 'comments/GET_FAILURE',
+  CREATE_REQUEST: 'comments/CREATE_REQUEST',
+  CREATE_SUCCESS: 'comments/CREATE_SUCCESS',
+  CREATE_FAILURE: 'comments/CREATE_FAILURE',
 };
 
 const initialState = {
@@ -17,6 +20,12 @@ export default function comments(state = initialState, action) {
     case Types.GET_SUCCESS:
       return { data: action.payload.data, loading: false, error: null };
     case Types.GET_FAILURE:
+      return { ...state, loading: false, error: action.payload.error };
+    case Types.CREATE_REQUEST:
+      return { ...state, loading: true };
+    case Types.CREATE_SUCCESS:
+      return { ...state, loading: false, error: null };
+    case Types.CREATE_FAILURE:
       return { ...state, loading: false, error: action.payload.error };
     default:
       return state;
@@ -40,6 +49,24 @@ export const Creators = {
 
   getCommentsFailure: error => ({
     type: Types.GET_FAILURE,
+    payload: {
+      error,
+    },
+  }),
+
+  createRequest: comment => ({
+    type: Types.CREATE_REQUEST,
+    payload: {
+      comment,
+    },
+  }),
+
+  createSuccess: () => ({
+    type: Types.CREATE_SUCCESS,
+  }),
+
+  createFailure: error => ({
+    type: Types.CREATE_FAILURE,
     payload: {
       error,
     },
