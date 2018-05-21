@@ -45,7 +45,7 @@ class CommentsList extends Component {
     const { data } = this.props.comments;
     return (
       <div>
-        <h1>Comments: </h1>
+        <h1>Comments</h1>
         <List
           itemLayout="horizontal"
           dataSource={data}
