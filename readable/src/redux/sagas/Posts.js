@@ -11,7 +11,6 @@ export function* getPosts() {
   try {
     const response = yield call(api.get, '/posts');
     const posts = response.data.sort(sortBy('-voteScore'));
-    console.log(posts);
     yield put(PostsActions.getPostsSuccess(posts));
   } catch (err) {
     yield put(PostsActions.getPostsFailure('Erro getting Posts'));
@@ -40,7 +39,6 @@ export function* sortPosts(action) {
   try {
     let newPosts = null;
     const posts = yield select(getCurrentPosts);
-    console.log(posts);
     const filter = action.payload.type;
     if (filter === 'marvel') {
       newPosts = posts.data.filter(post => post.path === 'marvel');
@@ -73,7 +71,6 @@ export function* getSinglePost(action) {
   try {
     const { id } = action.payload;
     const response = yield call(api.get, `/posts/${id}`);
-    console.log(response);
     yield put(PostsActions.getSinglePostSuccess(response.data));
   } catch (err) {
     yield put(PostsActions.getSinglePostFailure('Error on gettinh Post'));
