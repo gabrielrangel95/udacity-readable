@@ -76,3 +76,23 @@ export function* getSinglePost(action) {
     yield put(PostsActions.getSinglePostFailure('Error on gettinh Post'));
   }
 }
+
+export function* votePost(action) {
+  try {
+    const {
+      id, option, updateType, category,
+    } = action.payload;
+
+    yield call(api.post, `/posts/${id}`, { option });
+    yield put(PostsActions.voteSuccess());
+    if (updateType === 'allPosts') {
+      yield put(PostsActions.getPostsRequest());
+    } else if (updateType === 'category') {
+      yield put(PostsActions.filterCategoryRequest(category));
+    } else if (updateType === 'single') {
+      yield put(PostsActions.getSinglePostRequest(id));
+    }
+  } catch (err) {
+    yield put(PostsActions.voteFailure('Error on gettig Post'));
+  }
+}

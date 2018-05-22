@@ -12,6 +12,9 @@ export const Types = {
   GET_POST_REQUEST: 'posts/GET_POST_REQUEST',
   GET_POST_SUCCESS: 'posts/GET_POST_SUCCESS',
   GET_POST_FAILURE: 'posts/GET_POST_FAILURE',
+  VOTE_REQUEST: 'post/VOTE_REQUEST',
+  VOTE_SUCCESS: 'post/VOTE_SUCCESS',
+  VOTE_FAILURE: 'post/VOTE_FAILURE',
 };
 
 const initialState = {
@@ -50,6 +53,12 @@ export default function posts(state = initialState, action) {
         ...state, selected: action.payload.selected, loading: false, error: null,
       };
     case Types.GET_POST_FAILURE:
+      return { ...state, loading: false, error: action.payload.error };
+    case Types.VOTE_REQUEST:
+      return { ...state, loading: true };
+    case Types.VOTE_SUCCESS:
+      return { ...state, loading: false, error: null };
+    case Types.VOTE_FAILURE:
       return { ...state, loading: false, error: action.payload.error };
     default:
       return state;
@@ -136,6 +145,26 @@ export const Creators = {
 
   getSinglePostFailure: error => ({
     type: Types.GET_POST_FAILURE,
+    payload: {
+      error,
+    },
+  }),
+  voteRequest: (id, option, updateType, category) => ({
+    type: Types.VOTE_REQUEST,
+    payload: {
+      id,
+      option,
+      updateType,
+      category,
+    },
+  }),
+
+  voteSuccess: () => ({
+    type: Types.VOTE_SUCCESS,
+  }),
+
+  voteFailure: error => ({
+    type: Types.VOTE_FAILURE,
     payload: {
       error,
     },
