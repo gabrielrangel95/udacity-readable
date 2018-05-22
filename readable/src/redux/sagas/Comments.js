@@ -44,3 +44,30 @@ export function* voteComment(action) {
     yield put(CommentsActions.createFailure('Error on create Comment'));
   }
 }
+
+export function* deleteComment(action) {
+  try {
+    const { commentId, parentId } = action.payload;
+    console.log(action.payload);
+    const response = yield call(api.delete, `/comments/${commentId}`);
+    console.log(response);
+    yield put(CommentsActions.deleteSuccess());
+    yield put(CommentsActions.getCommentsRequest(parentId));
+  } catch (err) {
+    yield put(CommentsActions.deleteFailure('Error on delete comment'));
+  }
+}
+
+export function* updateComment(action) {
+  try {
+    const { id, body, parentId } = action.payload.comment;
+    yield call(api.put, `/comments/${id}`, {
+      body,
+      timestamp: Date.now(),
+    });
+    yield put(CommentsActions.updateSuccess());
+    yield put(CommentsActions.getCommentsRequest(parentId));
+  } catch (err) {
+    yield put(CommentsActions.updateFailure('Error on update comment'));
+  }
+}

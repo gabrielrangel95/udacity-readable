@@ -8,6 +8,12 @@ export const Types = {
   VOTE_REQUEST: 'comments/VOTE_REQUEST',
   VOTE_SUCCESS: 'comments/VOTE_SUCCESS',
   VOTE_FAILURE: 'comments/VOTE_FAILURE',
+  DELETE_REQUEST: 'comments/DELETE_REQUEST',
+  DELETE_SUCCESS: 'comments/DELETE_SUCCESS',
+  DELETE_FAILURE: 'comments/DELETE_FAILURE',
+  UPDATE_REQUEST: 'comments/UPDATE_REQUEST',
+  UPDATE_SUCCESS: 'comments/UPDATE_SUCCESS',
+  UPDATE_FAILURE: 'comments/UPDATE_FAILURE',
 };
 
 const initialState = {
@@ -35,6 +41,18 @@ export default function comments(state = initialState, action) {
     case Types.VOTE_SUCCESS:
       return { ...state, loading: false, error: null };
     case Types.VOTE_FAILURE:
+      return { ...state, loading: false, error: action.payload.error };
+    case Types.DELETE_REQUEST:
+      return { ...state, loading: true };
+    case Types.DELETE_SUCCESS:
+      return { ...state, loading: false, error: null };
+    case Types.DELETE_FAILURE:
+      return { ...state, loading: false, error: action.payload.error };
+    case Types.UPDATE_REQUEST:
+      return { ...state, loading: true };
+    case Types.UPDATE_SUCCESS:
+      return { ...state, loading: false, error: null };
+    case Types.UPDATE_FAILURE:
       return { ...state, loading: false, error: action.payload.error };
     default:
       return state;
@@ -96,6 +114,42 @@ export const Creators = {
 
   voteFailure: error => ({
     type: Types.VOTE_FAILURE,
+    payload: {
+      error,
+    },
+  }),
+
+  deleteRequest: (commentId, parentId) => ({
+    type: Types.DELETE_REQUEST,
+    payload: {
+      commentId,
+      parentId,
+    },
+  }),
+
+  deleteSuccess: () => ({
+    type: Types.DELETE_SUCCESS,
+  }),
+
+  deleteFailure: error => ({
+    type: Types.DELETE_FAILURE,
+    payload: {
+      error,
+    },
+  }),
+  updateRequest: comment => ({
+    type: Types.UPDATE_REQUEST,
+    payload: {
+      comment,
+    },
+  }),
+
+  updateSuccess: () => ({
+    type: Types.UPDATE_SUCCESS,
+  }),
+
+  updateFailure: error => ({
+    type: Types.UPDATE_FAILURE,
     payload: {
       error,
     },
