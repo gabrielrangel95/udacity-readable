@@ -5,7 +5,7 @@ import { Types as PostTypes } from '../ducks/Posts';
 import { Types as CommentsTypes } from '../ducks/Comments';
 
 import { getCategories } from './Categories';
-import { getPosts, createPost, sortPosts, filterCategory, getSinglePost, votePost, deletePost } from './Posts';
+import { getPosts, createPost, sortPosts, filterCategory, getSinglePost, votePost, deletePost, updatePost } from './Posts';
 import { getComments, createComment, voteComment } from './Comments';
 
 export default function* rootSaga() {
@@ -18,6 +18,7 @@ export default function* rootSaga() {
     takeLatest(PostTypes.GET_POST_REQUEST, getSinglePost),
     takeLatest(PostTypes.VOTE_REQUEST, votePost),
     takeLatest(PostTypes.DELETE_REQUEST, deletePost),
+    takeLatest(PostTypes.UPDATE_REQUEST, updatePost),
     takeLatest(CommentsTypes.GET_REQUEST, getComments),
     takeLatest(CommentsTypes.CREATE_REQUEST, createComment),
     takeLatest(CommentsTypes.VOTE_REQUEST, voteComment),

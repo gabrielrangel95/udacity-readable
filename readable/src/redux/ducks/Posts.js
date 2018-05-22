@@ -18,6 +18,9 @@ export const Types = {
   DELETE_REQUEST: 'post/DELETE_REQUEST',
   DELETE_SUCCESS: 'post/DELETE_SUCCESS',
   DELETE_FAILURE: 'post/DELETE_FAILURE',
+  UPDATE_REQUEST: 'post/UPDATE_REQUEST',
+  UPDATE_SUCCESS: 'post/UPDATE_SUCCESS',
+  UPDATE_FAILURE: 'post/UPDATE_FAILURE',
 };
 
 const initialState = {
@@ -68,6 +71,12 @@ export default function posts(state = initialState, action) {
     case Types.DELETE_SUCCESS:
       return { ...state, loading: false, error: null };
     case Types.DELETE_FAILURE:
+      return { ...state, loading: false, error: action.payload.error };
+    case Types.UPDATE_REQUEST:
+      return { ...state, loading: true };
+    case Types.UPDATE_SUCCESS:
+      return { ...state, loading: false, error: null };
+    case Types.UPDATE_FAILURE:
       return { ...state, loading: false, error: action.payload.error };
     default:
       return state;
@@ -194,6 +203,23 @@ export const Creators = {
 
   deleteFailure: error => ({
     type: Types.DELETE_FAILURE,
+    payload: {
+      error,
+    },
+  }),
+  updatePostRequest: post => ({
+    type: Types.UPDATE_REQUEST,
+    payload: {
+      post,
+    },
+  }),
+
+  updatePostSuccess: () => ({
+    type: Types.UPDATE_SUCCESS,
+  }),
+
+  updatePostFailure: error => ({
+    type: Types.UPDATE_FAILURE,
     payload: {
       error,
     },

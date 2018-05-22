@@ -111,3 +111,20 @@ export function* deletePost(action) {
     yield put(PostsActions.deleteFailure('Error on deleting Post'));
   }
 }
+
+export function* updatePost(action) {
+  try {
+    const {
+      id, title, body, category,
+    } = action.payload.post;
+    yield call(api.put, `/posts/${id}`, {
+      body,
+      title,
+    });
+    yield put(PostsActions.createPostSuccess());
+    yield put(PostsActions.filterCategoryRequest(category));
+    yield put(PostsActions.getPostsRequest());
+  } catch (err) {
+    yield put(PostsActions.createPostFailure('Error on create Post'));
+  }
+}
