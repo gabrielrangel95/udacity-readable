@@ -29,3 +29,16 @@ export function* createComment(action) {
     yield put(CommentsActions.createFailure('Error on create Comment'));
   }
 }
+
+export function* voteComment(action) {
+  try {
+    const { id, option, parentId } = action.payload;
+    yield call(api.post, `comments/${id}`, {
+      option,
+    });
+    yield put(CommentsActions.voteSuccess());
+    yield put(CommentsActions.getCommentsRequest(parentId));
+  } catch (err) {
+    yield put(CommentsActions.createFailure('Error on create Comment'));
+  }
+}
