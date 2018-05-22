@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Modal, Form, Input, Radio, message } from 'antd';
-import { Creators as postsCreators } from '../../../../redux/ducks/Posts';
+import { Creators as postsCreators } from '../../redux/ducks/Posts';
 
 
 const FormItem = Form.Item;
 
 
-class NewPostModal extends Component {
+class PostModal extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
     onCancel: PropTypes.func.isRequired,
     form: PropTypes.shape({
       validateFieldsAndScroll: PropTypes.func,
+      resetFields: PropTypes.func,
     }).isRequired,
     categories: PropTypes.shape({
       data: PropTypes.arrayOf(PropTypes.shape({
@@ -41,6 +42,7 @@ class NewPostModal extends Component {
           await this.props.createPostRequest(post);
           message.success('Post created succesfuly');
           this.props.onCancel();
+          this.props.form.resetFields();
         } catch (error) {
           message.failure(`Error on creating post - ${error}`);
         }
@@ -101,7 +103,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(postsCreators, dispatch);
 
-const NewPostModalConnected = connect(mapStateToProps, mapDispatchToProps)(NewPostModal);
-const NewPostModalForm = Form.create()(NewPostModalConnected);
+const PostModalConnected = connect(mapStateToProps, mapDispatchToProps)(PostModal);
+const PostModalForm = Form.create()(PostModalConnected);
 
-export { NewPostModalForm as NewPostModal };
+export { PostModalForm as PostModal };
