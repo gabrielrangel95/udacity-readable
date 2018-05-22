@@ -1,5 +1,9 @@
 # udacity-readable
 
+## Live Demo: https://comicsreadable.firebaseapp.com
+
+## Description
+
 This a project developed on Udacity's React Nanodegree.
 <br>
 The front-end was made using React.js
