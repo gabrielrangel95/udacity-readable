@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { List, Icon, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
-
+import { PostModal } from '../';
 import './PostItem.css';
 
 const marvelLogo = require('../../resources/img/marvel.svg');
@@ -25,6 +25,10 @@ class PostItem extends Component {
     }).isRequired,
     votePost: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
+  }
+
+  state = {
+    modalVisible: false,
   }
 
   categorieItemImage = (item) => {
@@ -80,11 +84,15 @@ class PostItem extends Component {
   categorieActions = item => (
     <div className="div-post-actions">
       <span>
-        <Icon type="edit" className="icon-details" />
-        Edit
+        <Popconfirm title="Are you sure edit this post?" onConfirm={() => this.openModal()} onCancel={() => { }} okText="Yes" cancelText="No">
+          <a href="/">
+            <Icon type="edit" className="icon-details" />
+            Edit
+          </a>
+        </Popconfirm>
       </span>
       <span>
-        <Popconfirm title="Are you sure delete this post?" onConfirm={() => this.props.deletePost(item.id)} onCancel={() => {}} okText="Yes" cancelText="No">
+        <Popconfirm title="Are you sure delete this post?" onConfirm={() => this.props.deletePost(item.id)} onCancel={() => { }} okText="Yes" cancelText="No">
           <a href="/">
             <Icon type="delete" className="icon-details" />
             Delete
@@ -102,26 +110,42 @@ class PostItem extends Component {
     </div>
   )
 
+  closeModal = () => {
+    this.setState({ modalVisible: false });
+  }
+
+  openModal = () => {
+    this.setState({ modalVisible: true });
+  }
+
   render() {
     const { item } = this.props;
     return (
-      <List.Item key={item.title} >
-        <div>
-          {this.categorieItemImage(item)}
-        </div>
-        <div>
-          {this.categorieRenderText(item)}
-        </div>
-        <div>
-          {this.categorieDetails(item)}
-        </div>
-        <div>
-          {this.categorieVoteScore(item)}
-        </div>
-        <div>
-          {this.categorieActions(item)}
-        </div>
-      </List.Item>
+      <div>
+        <PostModal
+          visible={this.state.modalVisible}
+          onCancel={this.closeModal}
+          title="Edit"
+          post={item}
+        />
+        <List.Item key={item.title} >
+          <div>
+            {this.categorieItemImage(item)}
+          </div>
+          <div>
+            {this.categorieRenderText(item)}
+          </div>
+          <div>
+            {this.categorieDetails(item)}
+          </div>
+          <div>
+            {this.categorieVoteScore(item)}
+          </div>
+          <div>
+            {this.categorieActions(item)}
+          </div>
+        </List.Item>
+      </div>
     );
   }
 }

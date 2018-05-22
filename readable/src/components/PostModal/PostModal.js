@@ -16,6 +16,7 @@ class PostModal extends Component {
     form: PropTypes.shape({
       validateFieldsAndScroll: PropTypes.func,
       resetFields: PropTypes.func,
+      setFieldsValue: PropTypes.func,
     }).isRequired,
     categories: PropTypes.shape({
       data: PropTypes.arrayOf(PropTypes.shape({
@@ -25,22 +26,62 @@ class PostModal extends Component {
       loading: PropTypes.bool,
     }).isRequired,
     createPostRequest: PropTypes.func.isRequired,
+    updatePostRequest: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    post: PropTypes.shape({
+      author: PropTypes.string,
+      body: PropTypes.string,
+      category: PropTypes.string,
+      commentCount: PropTypes.number,
+      deleted: PropTypes.bool,
+      id: PropTypes.string,
+      timestamp: PropTypes.number,
+      title: PropTypes.string,
+      voteScore: PropTypes.number,
+    }),
   };
+
+  static defaultProps = {
+    post: null,
+  }
+
+  componentDidMount() {
+    const { post } = this.props;
+    if (post) {
+      this.props.form.setFieldsValue({
+        title: post.title,
+        body: post.body,
+        author: post.author,
+        category: post.category,
+      });
+    }
+  }
+
 
   handleSubmit = async (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
-        const post = {
-          author: values.author,
-          body: values.body,
-          category: values.category,
-          title: values.title,
-        };
         try {
-          await this.props.createPostRequest(post);
-          message.success('Post created succesfuly');
+          if (this.props.title === 'Edit') {
+            const post = {
+              id: this.props.post.id,
+              body: values.body,
+              title: values.title,
+              category: this.props.post.category,
+            };
+            await this.props.updatePostRequest(post);
+            message.success('Post updated succesfuly');
+          } else {
+            const post = {
+              author: values.author,
+              body: values.body,
+              category: values.category,
+              title: values.title,
+            };
+            await this.props.createPostRequest(post);
+            message.success('Post created succesfuly');
+          }
           this.props.onCancel();
           this.props.form.resetFields();
         } catch (error) {
@@ -52,14 +93,15 @@ class PostModal extends Component {
 
   render() {
     const {
-      visible, onCancel, form, categories,
+      visible, onCancel, form, categories, title,
     } = this.props;
     const { getFieldDecorator } = form;
+    const editing = title === 'Edit';
     return (
       <Modal
         visible={visible}
-        title="Create a new Post"
-        okText="Create"
+        title={`${title} Post`}
+        okText={title}
         onCancel={() => onCancel()}
         onOk={this.handleSubmit}
       >
@@ -77,18 +119,18 @@ class PostModal extends Component {
           <FormItem label="Author">
             {getFieldDecorator('author', {
               rules: [{ required: true, message: 'Please input your name!' }],
-            })(<Input />)}
+            })(<Input disabled={editing} />)}
           </FormItem>
           <FormItem className="collection-create-form_last-form-item" label="Category">
             {getFieldDecorator('category', {
               rules: [{ required: true, message: 'Please select one category!' }],
-            })(<Radio.Group>
+            })(<Radio.Group disabled={editing}>
               {
                 categories.data.map(item => (
                   <Radio key={item.path} value={item.path} >{item.name}</Radio>
                 ))
               }
-               </Radio.Group> )}
+               </Radio.Group>)}
           </FormItem>
         </Form>
       </Modal>

@@ -66,6 +66,7 @@ class Root extends Component {
         <PostModal
           visible={this.state.createModalVisible}
           onCancel={this.onModalCancel}
+          title="Create"
         />
       </div>
     );
