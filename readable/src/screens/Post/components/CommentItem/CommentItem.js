@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { List, Icon } from 'antd';
+import { List, Icon, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
+import { CommentModal } from '../';
+
 
 class CommentItem extends Component {
   static propTypes = {
@@ -16,6 +18,11 @@ class CommentItem extends Component {
       voteScore: PropTypes.number,
     }).isRequired,
     voteComment: PropTypes.func.isRequired,
+    deleteComment: PropTypes.func.isRequired,
+  }
+
+  state = {
+    modalVisible: false,
   }
 
   commentRenderText = item => (
@@ -37,15 +44,23 @@ class CommentItem extends Component {
     </div>
   )
 
-  commentActions = () => (
+  commentActions = item => (
     <div className="div-post-actions">
       <span>
-        <Icon type="edit" className="icon-details" />
-        Edit
+        <Popconfirm title="Are you sure edit this comment?" onConfirm={() => this.setState({ modalVisible: true })} onCancel={() => { }} okText="Yes" cancelText="No">
+          <a href="/">
+            <Icon type="edit" className="icon-details" />
+            Edit
+          </a>
+        </Popconfirm>
       </span>
       <span>
-        <Icon type="delete" className="icon-details" />
-        Delete
+        <Popconfirm title="Are you sure delete this comment?" onConfirm={() => this.props.deleteComment(item.id)} onCancel={() => { }} okText="Yes" cancelText="No">
+          <a href="/">
+            <Icon type="delete" className="icon-details" />
+            Delete
+          </a>
+        </Popconfirm>
       </span>
     </div>
   )
@@ -58,23 +73,36 @@ class CommentItem extends Component {
     </div>
   )
 
+  closeModal = () => {
+    this.setState({ modalVisible: false });
+  }
+
   render() {
     const { item } = this.props;
     return (
-      <List.Item key={item.title} >
-        <div>
-          {this.commentRenderText(item)}
-        </div>
-        <div>
-          {this.commentDetails(item)}
-        </div>
-        <div>
-          {this.commentActions(item)}
-        </div>
-        <div>
-          {this.commentVoteScore(item)}
-        </div>
-      </List.Item>
+      <div>
+        <CommentModal
+          visible={this.state.modalVisible}
+          onCancel={this.closeModal}
+          modalTitle="Edit"
+          parentId={item.parentId}
+          comment={item}
+        />
+        <List.Item key={item.title} >
+          <div>
+            {this.commentRenderText(item)}
+          </div>
+          <div>
+            {this.commentDetails(item)}
+          </div>
+          <div>
+            {this.commentActions(item)}
+          </div>
+          <div>
+            {this.commentVoteScore(item)}
+          </div>
+        </List.Item>
+      </div>
     );
   }
 }

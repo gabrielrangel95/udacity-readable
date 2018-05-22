@@ -31,7 +31,7 @@ class Post extends Component {
 
   state = {
     modalVisible: false,
-    madalTitle: 'New Comment',
+    madalTitle: 'Create',
   }
 
   componentDidMount() {
@@ -52,7 +52,7 @@ class Post extends Component {
   }
 
   openCreateModal = () => {
-    this.setState({ modalVisible: true, madalTitle: 'New Comment' });
+    this.setState({ modalVisible: true, madalTitle: 'Create' });
   }
 
   closeModal = () => {

@@ -15,25 +15,62 @@ class CommentModal extends Component {
     onCancel: PropTypes.func.isRequired,
     form: PropTypes.shape({
       validateFieldsAndScroll: PropTypes.func,
+      setFieldsValue: PropTypes.func,
     }).isRequired,
     createRequest: PropTypes.func.isRequired,
+    updateRequest: PropTypes.func.isRequired,
     modalTitle: PropTypes.string.isRequired,
     parentId: PropTypes.string.isRequired,
+    comment: PropTypes.shape({
+      author: PropTypes.string,
+      body: PropTypes.string,
+      deleted: PropTypes.bool,
+      id: PropTypes.string,
+      parentDeleted: PropTypes.bool,
+      parentId: PropTypes.string,
+      timestamp: PropTypes.number,
+      voteScore: PropTypes.number,
+    }),
+
   };
+
+  static defaultProps = {
+    comment: null,
+  }
+
+  componentDidMount() {
+    const { comment } = this.props;
+    if (comment) {
+      this.props.form.setFieldsValue({
+        body: comment.body,
+        author: comment.author,
+      });
+    }
+  }
 
   handleSubmit = async (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        const comment = {
-          author: values.author,
-          body: values.body,
-          parentId: this.props.parentId,
-        };
         try {
-          await this.props.createRequest(comment);
-          message.success('Comment created succesfuly');
+          if (this.props.modalTitle === 'Edit') {
+            const comment = {
+              body: values.body,
+              parentId: this.props.parentId,
+              id: this.props.comment.id,
+            };
+            await this.props.updateRequest(comment);
+            message.success('Comment updated succesfuly');
+          } else {
+            const comment = {
+              author: values.author,
+              body: values.body,
+              parentId: this.props.parentId,
+            };
+            await this.props.createRequest(comment);
+            message.success('Comment created succesfuly');
+          }
           this.props.onCancel();
         } catch (error) {
           message.failure(`Error on creating comment - ${error}`);
@@ -47,11 +84,12 @@ class CommentModal extends Component {
       visible, onCancel, form, modalTitle,
     } = this.props;
     const { getFieldDecorator } = form;
+    const editing = modalTitle === 'Edit';
     return (
       <Modal
         visible={visible}
-        title={modalTitle}
-        okText="Comment"
+        title={`${modalTitle} comment`}
+        okText={modalTitle}
         onCancel={() => onCancel()}
         onOk={this.handleSubmit}
       >
@@ -64,7 +102,7 @@ class CommentModal extends Component {
           <FormItem label="Author">
             {getFieldDecorator('author', {
               rules: [{ required: true, message: 'Please input your name!' }],
-            })(<Input />)}
+            })(<Input disabled={editing} />)}
           </FormItem>
         </Form>
       </Modal>

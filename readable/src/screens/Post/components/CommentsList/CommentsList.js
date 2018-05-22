@@ -30,6 +30,8 @@ class CommentsList extends Component {
       loading: PropTypes.bool,
     }).isRequired,
     voteRequest: PropTypes.func.isRequired,
+    deleteRequest: PropTypes.func.isRequired,
+    updateRequest: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -41,6 +43,16 @@ class CommentsList extends Component {
     const { id } = this.props.match.params;
     const parentId = id;
     this.props.voteRequest(commentId, type, parentId);
+  }
+
+  deleteComment = (commentId) => {
+    const { id } = this.props.match.params;
+    const parentId = id;
+    this.props.deleteRequest(commentId, parentId);
+  }
+
+  updateComment = (comment) => {
+    this.props.updateRequest(comment);
   }
 
   render() {
@@ -61,6 +73,8 @@ class CommentsList extends Component {
             <CommentItem
               item={item}
               voteComment={this.voteComment}
+              deleteComment={this.deleteComment}
+              updateComment={this.updateComment}
             />
           )}
         />
