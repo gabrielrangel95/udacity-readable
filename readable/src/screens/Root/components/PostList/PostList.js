@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { List } from 'antd';
+import { List, message } from 'antd';
 import PropTypes from 'prop-types';
 import { PostItem, PostHeader } from '../../../../components';
 
@@ -55,6 +55,7 @@ class PostList extends Component {
       updateType = 'category';
     }
     this.props.deleteRequest(postId, updateType, category);
+    message.success('Post deleted!');
   }
 
   render() {
