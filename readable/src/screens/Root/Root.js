@@ -57,7 +57,7 @@ class Root extends Component {
             <Option value="voteScore">voteScore</Option>
             <Option value="timestamp">Date</Option>
           </Select>
-          <Button onClick={() => this.openCreateModal()} className="div-button-new-post">New Post</Button>
+          <Button onClick={() => this.openCreateModal()} className="div-button-new-post" type="danger">New Post</Button>
         </div>
         <PostList
           currentList={this.state.currentList}

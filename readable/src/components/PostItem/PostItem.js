@@ -64,7 +64,9 @@ class PostItem extends Component {
         {item.author}
       </span>
       <span>
-        <Icon type="message" className="icon-details" />
+        <a href={`/post/${item.id}`} >
+          <Icon type="message" className="icon-details" />
+        </a>
         {item.commentCount}
       </span>
       <span>
