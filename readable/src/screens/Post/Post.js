@@ -18,6 +18,7 @@ class Post extends Component {
     }).isRequired,
     selected: PropTypes.shape(),
     getSinglePostRequest: PropTypes.func.isRequired,
+    voteRequest: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -32,6 +33,11 @@ class Post extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.getSinglePostRequest(id);
+  }
+
+  votePost = (postId, option) => {
+    const updateType = 'single';
+    this.props.voteRequest(postId, option, updateType);
   }
 
   openCreateModal = () => {
@@ -65,6 +71,7 @@ class Post extends Component {
                 <PostHeader />
                 <PostItem
                   item={selected}
+                  votePost={this.votePost}
                 />
               </div>
               <div className="div-coment-list">

@@ -24,15 +24,15 @@ class Root extends Component {
   state = {
     createModalVisible: false,
     title: 'All Posts',
+    currentList: 'all',
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     const { category } = nextProps.match.params;
     if (category === 'all' || category === undefined) {
-      this.setState({ title: 'All Posts' });
+      this.setState({ title: 'All Posts', currentList: 'all' });
     } else {
-      this.setState({ title: `Category: ${category}` });
+      this.setState({ title: `Category: ${category}`, currentList: category });
     }
   }
 
@@ -45,7 +45,6 @@ class Root extends Component {
   }
 
   handleSelectChange = (value) => {
-    console.log(`selected ${value}`);
     this.props.sortPostRequest(value);
   }
 
@@ -60,7 +59,9 @@ class Root extends Component {
           </Select>
           <Button onClick={() => this.openCreateModal()} className="div-button-new-post">New Post</Button>
         </div>
-        <PostList />
+        <PostList
+          currentList={this.state.currentList}
+        />
         <NewPostModal
           visible={this.state.createModalVisible}
           onCancel={this.onModalCancel}

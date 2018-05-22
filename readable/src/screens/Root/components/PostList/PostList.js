@@ -26,10 +26,23 @@ class PostList extends Component {
       })),
       loading: PropTypes.bool,
     }).isRequired,
+    voteRequest: PropTypes.func.isRequired,
+    currentList: PropTypes.string.isRequired,
   }
 
   componentDidMount() {
     this.props.getPostsRequest();
+  }
+
+  votePost = (postId, option) => {
+    let updateType = 'allPosts';
+    const category = this.props.currentList;
+    if (category === 'all') {
+      updateType = 'allPosts';
+    } else {
+      updateType = 'category';
+    }
+    this.props.voteRequest(postId, option, updateType, category);
   }
 
   render() {
@@ -49,6 +62,7 @@ class PostList extends Component {
           renderItem={item => (
             <PostItem
               item={item}
+              votePost={this.votePost}
             />
           )}
         />

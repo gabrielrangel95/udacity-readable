@@ -23,6 +23,7 @@ class PostItem extends Component {
       title: PropTypes.string,
       voteScore: PropTypes.number,
     }).isRequired,
+    votePost: PropTypes.func.isRequired,
   }
 
   categorieItemImage = (item) => {
@@ -88,9 +89,9 @@ class PostItem extends Component {
 
   categorieVoteScore = item => (
     <div className="div-score">
-      <Icon type="up-square-o" className="icon-score" />
+      <Icon type="up-square-o" className="icon-score" onClick={() => this.props.votePost(item.id, 'upVote')} />
       <span className="text-score">{item.voteScore}</span>
-      <Icon type="down-square-o" className="icon-score" />
+      <Icon type="down-square-o" className="icon-score" onClick={() => this.props.votePost(item.id, 'downVote')} />
     </div>
   )
 
