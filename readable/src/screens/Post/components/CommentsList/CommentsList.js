@@ -37,10 +37,6 @@ class CommentsList extends Component {
     this.props.getCommentsRequest(id);
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
-
   voteComment = (commentId, type) => {
     const { id } = this.props.match.params;
     const parentId = id;
