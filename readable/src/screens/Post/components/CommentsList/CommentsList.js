@@ -29,6 +29,7 @@ class CommentsList extends Component {
       })),
       loading: PropTypes.bool,
     }).isRequired,
+    voteRequest: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -40,6 +41,11 @@ class CommentsList extends Component {
     console.log(nextProps);
   }
 
+  voteComment = (commentId, type) => {
+    const { id } = this.props.match.params;
+    const parentId = id;
+    this.props.voteRequest(commentId, type, parentId);
+  }
 
   render() {
     const { data } = this.props.comments;
@@ -58,6 +64,7 @@ class CommentsList extends Component {
           renderItem={item => (
             <CommentItem
               item={item}
+              voteComment={this.voteComment}
             />
           )}
         />

@@ -15,6 +15,7 @@ class CommentItem extends Component {
       timestamp: PropTypes.number,
       voteScore: PropTypes.number,
     }).isRequired,
+    voteComment: PropTypes.func.isRequired,
   }
 
   commentRenderText = item => (
@@ -51,9 +52,9 @@ class CommentItem extends Component {
 
   commentVoteScore = item => (
     <div className="div-score">
-      <Icon type="up-square-o" className="icon-score" />
+      <Icon type="up-square-o" className="icon-score" onClick={() => this.props.voteComment(item.id, 'upVote')} />
       <span className="text-score">{item.voteScore}</span>
-      <Icon type="down-square-o" className="icon-score" />
+      <Icon type="down-square-o" className="icon-score" onClick={() => this.props.voteComment(item.id, 'downVote')} />
     </div>
   )
 
