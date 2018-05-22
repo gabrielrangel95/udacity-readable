@@ -1,6 +1,12 @@
 # udacity-readable
 
 This a project developed on Udacity's React Nanodegree.
+<br>
+The front-end was made using React.js
+<br>
+For persist the data consumed by the api, Redux and Redux-saga was used.
+<br>
+For the UI components, the library Antd was used.
 
 ## Instructions: 
 Firts, you need start the local api:
