@@ -73,7 +73,7 @@ export function* getSinglePost(action) {
     const response = yield call(api.get, `/posts/${id}`);
     yield put(PostsActions.getSinglePostSuccess(response.data));
   } catch (err) {
-    yield put(PostsActions.getSinglePostFailure('Error on gettinh Post'));
+    yield put(PostsActions.getSinglePostFailure('Error on getting Post'));
   }
 }
 
@@ -93,6 +93,21 @@ export function* votePost(action) {
       yield put(PostsActions.getSinglePostRequest(id));
     }
   } catch (err) {
-    yield put(PostsActions.voteFailure('Error on gettig Post'));
+    yield put(PostsActions.voteFailure('Error on voting Post'));
+  }
+}
+
+export function* deletePost(action) {
+  try {
+    const { id, updateType, category } = action.payload;
+    yield call(api.delete, `/posts/${id}`);
+    yield put(PostsActions.deleteSuccess());
+    if (updateType === 'category') {
+      yield put(PostsActions.filterCategoryRequest(category));
+    } else if (updateType === 'allPosts') {
+      yield put(PostsActions.getPostsRequest(id));
+    }
+  } catch (err) {
+    yield put(PostsActions.deleteFailure('Error on deleting Post'));
   }
 }
