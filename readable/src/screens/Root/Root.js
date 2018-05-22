@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import { Button, Select } from 'antd';
 import PropTypes from 'prop-types';
 import './Root.css';
-import { PostList, NewPostModal } from './components';
+import { PostList } from './components';
+import { PostModal } from '../../components';
 import { Creators as postsCreators } from '../../redux/ducks/Posts';
 
 const { Option } = Select;
@@ -62,7 +63,7 @@ class Root extends Component {
         <PostList
           currentList={this.state.currentList}
         />
-        <NewPostModal
+        <PostModal
           visible={this.state.createModalVisible}
           onCancel={this.onModalCancel}
         />

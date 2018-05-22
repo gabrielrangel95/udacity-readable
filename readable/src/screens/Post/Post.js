@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import './Post.css';
 import { Creators as postsCreators } from '../../redux/ducks/Posts';
 import { PostItem, PostHeader } from '../../components';
@@ -48,6 +48,7 @@ class Post extends Component {
     const updateType = 'allPosts';
     this.props.deleteRequest(postId, updateType);
     this.props.history.push('/all');
+    message.success('Post deleted!');
   }
 
   openCreateModal = () => {
