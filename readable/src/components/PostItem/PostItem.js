@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { List, Icon } from 'antd';
+import { List, Icon, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
 
 import './PostItem.css';
@@ -24,6 +24,7 @@ class PostItem extends Component {
       voteScore: PropTypes.number,
     }).isRequired,
     votePost: PropTypes.func.isRequired,
+    deletePost: PropTypes.func.isRequired,
   }
 
   categorieItemImage = (item) => {
@@ -76,15 +77,19 @@ class PostItem extends Component {
     </div>
   )
 
-  categorieActions = () => (
+  categorieActions = item => (
     <div className="div-post-actions">
       <span>
         <Icon type="edit" className="icon-details" />
         Edit
       </span>
       <span>
-        <Icon type="delete" className="icon-details" />
-        Delete
+        <Popconfirm title="Are you sure delete this post?" onConfirm={() => this.props.deletePost(item.id)} onCancel={() => {}} okText="Yes" cancelText="No">
+          <a href="/">
+            <Icon type="delete" className="icon-details" />
+            Delete
+          </a>
+        </Popconfirm>
       </span>
     </div>
   )

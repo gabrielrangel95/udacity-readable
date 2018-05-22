@@ -19,6 +19,10 @@ class Post extends Component {
     selected: PropTypes.shape(),
     getSinglePostRequest: PropTypes.func.isRequired,
     voteRequest: PropTypes.func.isRequired,
+    deleteRequest: PropTypes.func.isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
   }
 
   static defaultProps = {
@@ -38,6 +42,12 @@ class Post extends Component {
   votePost = (postId, option) => {
     const updateType = 'single';
     this.props.voteRequest(postId, option, updateType);
+  }
+
+  deletePost = (postId) => {
+    const updateType = 'allPosts';
+    this.props.deleteRequest(postId, updateType);
+    this.props.history.push('/all');
   }
 
   openCreateModal = () => {
@@ -72,6 +82,7 @@ class Post extends Component {
                 <PostItem
                   item={selected}
                   votePost={this.votePost}
+                  deletePost={this.deletePost}
                 />
               </div>
               <div className="div-coment-list">

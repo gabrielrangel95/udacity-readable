@@ -28,6 +28,7 @@ class PostList extends Component {
     }).isRequired,
     voteRequest: PropTypes.func.isRequired,
     currentList: PropTypes.string.isRequired,
+    deleteRequest: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -43,6 +44,17 @@ class PostList extends Component {
       updateType = 'category';
     }
     this.props.voteRequest(postId, option, updateType, category);
+  }
+
+  deletePost = (postId) => {
+    let updateType = 'allPosts';
+    const category = this.props.currentList;
+    if (category === 'all') {
+      updateType = 'allPosts';
+    } else {
+      updateType = 'category';
+    }
+    this.props.deleteRequest(postId, updateType, category);
   }
 
   render() {
@@ -63,6 +75,7 @@ class PostList extends Component {
             <PostItem
               item={item}
               votePost={this.votePost}
+              deletePost={this.deletePost}
             />
           )}
         />
