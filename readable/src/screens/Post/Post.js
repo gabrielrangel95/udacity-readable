@@ -42,7 +42,6 @@ class Post extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (nextProps.error) {
       this.props.history.push('/404');
     }
