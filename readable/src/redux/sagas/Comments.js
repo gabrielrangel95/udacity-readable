@@ -2,6 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import sortBy from 'sort-by';
 import api from '../../services/api';
 import { Creators as CommentsActions } from '../ducks/Comments';
+import { Creators as PostActions } from '../ducks/Posts';
 
 const uuidv1 = require('uuid/v1');
 
@@ -11,6 +12,7 @@ export function* getComments(action) {
     const response = yield call(api.get, `/posts/${id}/comments`);
     const comments = response.data.sort(sortBy('-voteScore'));
     yield put(CommentsActions.getCommentsSuccess(comments));
+    yield put(PostActions.getSinglePostRequest(id));
   } catch (err) {
     yield put(CommentsActions.getCommentsFailure('Error getting comments'));
   }
