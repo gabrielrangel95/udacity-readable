@@ -11,6 +11,9 @@ import './PostList.css';
 
 class PostList extends Component {
   static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
     getPostsRequest: PropTypes.func.isRequired,
     posts: PropTypes.shape({
       data: PropTypes.arrayOf(PropTypes.shape({
@@ -58,6 +61,11 @@ class PostList extends Component {
     message.success('Post deleted!');
   }
 
+  openPost = (postId) => {
+    const category = this.props.currentList;
+    this.props.history.push(`/${category}/${postId}`);
+  }
+
   render() {
     const { data } = this.props.posts;
     return (
@@ -77,6 +85,7 @@ class PostList extends Component {
               item={item}
               votePost={this.votePost}
               deletePost={this.deletePost}
+              openPost={this.openPost}
             />
           )}
         />

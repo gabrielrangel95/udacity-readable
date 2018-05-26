@@ -25,7 +25,16 @@
   color: black;
   font-weight: bold;
   margin-bottom: 4px;
+  background-color: transparent;
+  border-color: transparent;
 }
+
+.button-comments{
+  background-color: transparent;
+  border-color: transparent;
+  padding: 0;
+}
+
 
 .div-post-texts{
   display: flex;
@@ -81,4 +90,7 @@
 }
 
 
-
+.icon-score:hover, .button-comments:hover, .text-item-title:hover, .a-details:hover  {
+  color: red;
+  cursor: pointer;
+}

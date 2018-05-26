@@ -25,6 +25,7 @@ class PostItem extends Component {
     }).isRequired,
     votePost: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
+    openPost: PropTypes.func.isRequired,
   }
 
   state = {
@@ -57,7 +58,7 @@ class PostItem extends Component {
 
   categorieRenderText = item => (
     <div className="div-post-texts">
-      <a href={`/post/${item.id}`} className="text-item-title">{item.title}</a>
+      <button onClick={() => this.props.openPost(item.id)} className="text-item-title">{item.title}</button>
       <span>{item.body}</span>
     </div>
   )
@@ -69,10 +70,12 @@ class PostItem extends Component {
         {item.author}
       </span>
       <span>
-        <a href={`/post/${item.id}`} >
-          <Icon type="message" className="icon-details" />
-        </a>
-        {item.commentCount}
+        <button onClick={() => this.props.openPost(item.id)} className="button-comments">
+          <span>
+            <Icon type="message" className="icon-details" />
+          </span>
+          {item.commentCount}
+        </button>
       </span>
       <span>
         <Icon type="clock-circle-o" className="icon-details" />
@@ -85,7 +88,7 @@ class PostItem extends Component {
     <div className="div-post-actions">
       <span>
         <Popconfirm title="Are you sure edit this post?" onConfirm={() => this.openModal()} onCancel={() => { }} okText="Yes" cancelText="No">
-          <a href="/">
+          <a href="/" className="a-details">
             <Icon type="edit" className="icon-details" />
             Edit
           </a>
@@ -93,7 +96,7 @@ class PostItem extends Component {
       </span>
       <span>
         <Popconfirm title="Are you sure delete this post?" onConfirm={() => this.props.deletePost(item.id)} onCancel={() => { }} okText="Yes" cancelText="No">
-          <a href="/">
+          <a href="/" className="a-details">
             <Icon type="delete" className="icon-details" />
             Delete
           </a>
