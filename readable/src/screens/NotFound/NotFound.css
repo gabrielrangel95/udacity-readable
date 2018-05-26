@@ -1,0 +1,14 @@
+.div-not-found{
+  min-width: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.title-not-found{
+  color: rgb(112, 17, 17);
+  font-size: 100px;
+}
