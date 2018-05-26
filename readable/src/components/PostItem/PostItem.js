@@ -58,7 +58,7 @@ class PostItem extends Component {
 
   categorieRenderText = item => (
     <div className="div-post-texts">
-      <button onClick={() => this.props.openPost(item.id)} className="text-item-title">{item.title}</button>
+      <button onClick={() => this.props.openPost(item.id, item.category)} className="text-item-title">{item.title}</button>
       <span>{item.body}</span>
     </div>
   )
@@ -70,7 +70,7 @@ class PostItem extends Component {
         {item.author}
       </span>
       <span>
-        <button onClick={() => this.props.openPost(item.id)} className="button-comments">
+        <button onClick={() => this.props.openPost(item.id, item.category)} className="button-comments">
           <span>
             <Icon type="message" className="icon-details" />
           </span>

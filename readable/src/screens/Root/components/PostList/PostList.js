@@ -61,8 +61,7 @@ class PostList extends Component {
     message.success('Post deleted!');
   }
 
-  openPost = (postId) => {
-    const category = this.props.currentList;
+  openPost = (postId, category) => {
     this.props.history.push(`/${category}/${postId}`);
   }
 
