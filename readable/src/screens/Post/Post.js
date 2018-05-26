@@ -23,10 +23,12 @@ class Post extends Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    error: PropTypes.string,
   }
 
   static defaultProps = {
     selected: null,
+    error: null,
   }
 
   state = {
@@ -37,6 +39,13 @@ class Post extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.getSinglePostRequest(id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (nextProps.error) {
+      this.props.history.push('/404');
+    }
   }
 
   votePost = (postId, option) => {
@@ -99,6 +108,7 @@ class Post extends Component {
 
 const mapStateToProps = state => ({
   selected: state.posts.selected,
+  error: state.posts.error,
 });
 
 

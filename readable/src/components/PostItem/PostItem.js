@@ -12,6 +12,9 @@ const discussLogo = require('../../resources/img/di_logo.svg');
 
 class PostItem extends Component {
   static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
     item: PropTypes.shape({
       author: PropTypes.string,
       body: PropTypes.string,
@@ -25,11 +28,14 @@ class PostItem extends Component {
     }).isRequired,
     votePost: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
-    openPost: PropTypes.func.isRequired,
   }
 
   state = {
     modalVisible: false,
+  }
+
+  openPost = (postId, category) => {
+    this.props.history.push(`/${category}/${postId}`);
   }
 
   categorieItemImage = (item) => {
@@ -58,7 +64,7 @@ class PostItem extends Component {
 
   categorieRenderText = item => (
     <div className="div-post-texts">
-      <button onClick={() => this.props.openPost(item.id, item.category)} className="text-item-title">{item.title}</button>
+      <button onClick={() => this.openPost(item.id, item.category)} className="text-item-title">{item.title}</button>
       <span>{item.body}</span>
     </div>
   )
@@ -70,7 +76,7 @@ class PostItem extends Component {
         {item.author}
       </span>
       <span>
-        <button onClick={() => this.props.openPost(item.id, item.category)} className="button-comments">
+        <button onClick={() => this.openPost(item.id, item.category)} className="button-comments">
           <span>
             <Icon type="message" className="icon-details" />
           </span>
