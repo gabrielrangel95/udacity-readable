@@ -72,6 +72,7 @@ class CommentModal extends Component {
             message.success('Comment created succesfuly');
           }
           this.props.onCancel();
+          this.props.form.resetFields();
         } catch (error) {
           message.failure(`Error on creating comment - ${error}`);
         }
