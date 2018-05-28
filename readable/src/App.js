@@ -10,6 +10,7 @@ const App = () => (
       <Route exact path="/404" component={NotFound} />
       <Route exact path="/:category" component={Root} />
       <Route exact path="/:category/:id" component={Post} />
+      <Route component={NotFound} />
     </Switch>
   </MainContainer>
 );
