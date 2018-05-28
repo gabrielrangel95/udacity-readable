@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { List, message } from 'antd';
+import { List, message, Spin } from 'antd';
 import PropTypes from 'prop-types';
 import { PostItem, PostHeader } from '../../../../components';
 
@@ -12,6 +12,7 @@ import './PostList.css';
 class PostList extends Component {
   static propTypes = {
     getPostsRequest: PropTypes.func.isRequired,
+    filterCategoryRequest: PropTypes.func.isRequired,
     posts: PropTypes.shape({
       data: PropTypes.arrayOf(PropTypes.shape({
         author: PropTypes.string,
@@ -29,10 +30,20 @@ class PostList extends Component {
     voteRequest: PropTypes.func.isRequired,
     currentList: PropTypes.string.isRequired,
     deleteRequest: PropTypes.func.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        category: PropTypes.string,
+      }),
+    }).isRequired,
   }
 
   componentDidMount() {
-    this.props.getPostsRequest();
+    const { category } = this.props.match.params;
+    if (!category) {
+      this.props.getPostsRequest();
+    } else {
+      this.props.filterCategoryRequest(category);
+    }
   }
 
   votePost = (postId, option) => {
@@ -60,7 +71,14 @@ class PostList extends Component {
 
 
   render() {
-    const { data } = this.props.posts;
+    const { data, loading } = this.props.posts;
+    if (loading) {
+      return (
+        <div className="div-loading">
+          <Spin size="large" />
+        </div>
+      );
+    }
     return (
       <div>
         <PostHeader />
