@@ -8,6 +8,7 @@ import './Post.css';
 import { Creators as postsCreators } from '../../redux/ducks/Posts';
 import { PostItem, PostHeader } from '../../components';
 import { CommentsList, CommentModal } from './components';
+import { NotFound } from '../';
 
 class Post extends Component {
   static propTypes = {
@@ -24,6 +25,7 @@ class Post extends Component {
       push: PropTypes.func.isRequired,
     }).isRequired,
     error: PropTypes.string,
+    loading: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -42,6 +44,7 @@ class Post extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     if (nextProps.error) {
       this.props.history.push('/404');
     }
@@ -69,8 +72,15 @@ class Post extends Component {
 
 
   render() {
-    const { selected } = this.props;
+    const { selected, loading } = this.props;
     const { id } = this.props.match.params;
+
+    if (!selected && !loading) {
+      return (
+        <NotFound />
+      );
+    }
+
     return (
       <div>
         <h1>Post</h1>
@@ -108,6 +118,7 @@ class Post extends Component {
 const mapStateToProps = state => ({
   selected: state.posts.selected,
   error: state.posts.error,
+  loading: state.posts.loading,
 });
 
 
