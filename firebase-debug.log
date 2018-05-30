@@ -1,0 +1,35 @@
+[debug] [2018-05-30T23:04:25.883Z] ----------------------------------------------------------------------
+[debug] [2018-05-30T23:04:25.885Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-05-30T23:04:25.885Z] CLI Version:   3.18.5
+[debug] [2018-05-30T23:04:25.885Z] Platform:      darwin
+[debug] [2018-05-30T23:04:25.885Z] Node Version:  v8.11.2
+[debug] [2018-05-30T23:04:25.886Z] Time:          Wed May 30 2018 20:04:25 GMT-0300 (-03)
+[debug] [2018-05-30T23:04:25.886Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-05-30T23:04:25.893Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-05-30T23:04:25.893Z] > authorizing via signed-in user
+[debug] [2018-05-30T23:04:25.894Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-05-30T23:04:25.895Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/OdhlTcH3x3wcNNOMOZMC2ZpSEZGCvHInL4LCebikahE',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Wed May 30 2018 20:04:25 GMT-0300 (-03)
+[debug] [2018-05-30T23:04:26.524Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-30T23:04:26.532Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/comicsreadable  
+  
+ Wed May 30 2018 20:04:26 GMT-0300 (-03)
+[debug] [2018-05-30T23:04:28.340Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-30T23:04:28.341Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/comicsreadable/tokens  
+  
+ Wed May 30 2018 20:04:28 GMT-0300 (-03)
+[debug] [2018-05-30T23:04:29.589Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'comicsreadable'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing build directory for upload...
+[debug] [2018-05-30T23:04:32.639Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/comicsreadable/uploads/-LDnHv1MNGc8DkIlPt82?fileCount=18&message=  
+  
+ Wed May 30 2018 20:04:32 GMT-0300 (-03)
