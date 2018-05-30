@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { List, Icon, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
-import { CommentModal } from '../';
-
 
 class CommentItem extends Component {
   static propTypes = {
@@ -19,11 +17,9 @@ class CommentItem extends Component {
     }).isRequired,
     voteComment: PropTypes.func.isRequired,
     deleteComment: PropTypes.func.isRequired,
+    selectedRequest: PropTypes.func.isRequired,
   }
 
-  state = {
-    modalVisible: false,
-  }
 
   commentRenderText = item => (
     <div className="div-post-texts">
@@ -47,7 +43,7 @@ class CommentItem extends Component {
   commentActions = item => (
     <div className="div-post-actions">
       <span>
-        <Popconfirm title="Are you sure edit this comment?" onConfirm={() => this.setState({ modalVisible: true })} onCancel={() => { }} okText="Yes" cancelText="No">
+        <Popconfirm title="Are you sure edit this comment?" onConfirm={() => this.props.selectedRequest(item) } onCancel={() => { }} okText="Yes" cancelText="No">
           <a href="/">
             <Icon type="edit" className="icon-details" />
             Edit
@@ -73,21 +69,10 @@ class CommentItem extends Component {
     </div>
   )
 
-  closeModal = () => {
-    this.setState({ modalVisible: false });
-  }
-
   render() {
     const { item } = this.props;
     return (
-      <div>
-        <CommentModal
-          visible={this.state.modalVisible}
-          onCancel={this.closeModal}
-          modalTitle="Edit"
-          parentId={item.parentId}
-          comment={item}
-        />
+      <div> 
         <List.Item key={item.title} >
           <div>
             {this.commentRenderText(item)}

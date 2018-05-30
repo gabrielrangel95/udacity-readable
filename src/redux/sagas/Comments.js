@@ -73,3 +73,12 @@ export function* updateComment(action) {
     yield put(CommentsActions.updateFailure('Error on update comment'));
   }
 }
+
+export function* setCommentSelected(action){
+  try{
+    const { selected } = action.payload;
+    yield put(CommentsActions.selectedSuccess(selected));
+  }catch(error){
+    yield put(CommentsActions.selectedFailure(error));
+  }
+}

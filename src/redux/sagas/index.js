@@ -6,7 +6,7 @@ import { Types as CommentsTypes } from '../ducks/Comments';
 
 import { getCategories } from './Categories';
 import { getPosts, createPost, sortPosts, filterCategory, getSinglePost, votePost, deletePost, updatePost } from './Posts';
-import { getComments, createComment, voteComment, deleteComment, updateComment } from './Comments';
+import { getComments, createComment, voteComment, deleteComment, updateComment, setCommentSelected } from './Comments';
 
 export default function* rootSaga() {
   return yield all([
@@ -24,5 +24,6 @@ export default function* rootSaga() {
     takeLatest(CommentsTypes.VOTE_REQUEST, voteComment),
     takeLatest(CommentsTypes.DELETE_REQUEST, deleteComment),
     takeLatest(CommentsTypes.UPDATE_REQUEST, updateComment),
+    takeLatest(CommentsTypes.SELECT_REQUEST, setCommentSelected),
   ]);
 }

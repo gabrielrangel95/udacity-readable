@@ -14,12 +14,16 @@ export const Types = {
   UPDATE_REQUEST: 'comments/UPDATE_REQUEST',
   UPDATE_SUCCESS: 'comments/UPDATE_SUCCESS',
   UPDATE_FAILURE: 'comments/UPDATE_FAILURE',
+  SELECT_REQUEST: 'comments/SELECT_REQUEST',
+  SELECT_SUCCESS: 'comments/SELECT_SUCCESS',
+  SELECT_FAILURE: 'comments/SELECT_FAILURE',
 };
 
 const initialState = {
   data: [],
   loading: false,
   error: null,
+  selected: null,
 };
 
 export default function comments(state = initialState, action) {
@@ -54,6 +58,12 @@ export default function comments(state = initialState, action) {
       return { ...state, loading: false, error: null };
     case Types.UPDATE_FAILURE:
       return { ...state, loading: false, error: action.payload.error };
+    case Types.SELECT_REQUEST:
+      return { ...state };
+    case Types.SELECT_SUCCESS:
+      return { ...state, selected: action.payload.selected };
+    case Types.SELECT_FAILURE:
+      return { ...state, error: action.payload.error };
     default:
       return state;
   }
@@ -154,4 +164,27 @@ export const Creators = {
       error,
     },
   }),
+
+  selectedRequest: selected => ({
+    type: Types.SELECT_REQUEST,
+    payload: {
+      selected
+    }
+  }),
+
+  selectedSuccess: selected => ({
+    type: Types.SELECT_SUCCESS,
+    payload: {
+      selected
+    }
+  }),
+
+  selectedFailure: error => ({
+    type: Types.SELECT_FAILURE,
+    payload: {
+      error,
+    },
+  }),
+
+
 };

@@ -6,7 +6,7 @@ import { List } from 'antd';
 import PropTypes from 'prop-types';
 import { Creators as commentsCreators } from '../../../../redux/ducks/Comments';
 import './CommentsList.css';
-import { CommentItem } from '../';
+import { CommentItem, CommentModal } from '../';
 
 class CommentsList extends Component {
   static propTypes = {
@@ -32,6 +32,11 @@ class CommentsList extends Component {
     voteRequest: PropTypes.func.isRequired,
     deleteRequest: PropTypes.func.isRequired,
     updateRequest: PropTypes.func.isRequired,
+    selectedRequest: PropTypes.func.isRequired,
+  }
+
+  state = {
+    modalVisible: false,
   }
 
   componentDidMount() {
@@ -55,11 +60,29 @@ class CommentsList extends Component {
     this.props.updateRequest(comment);
   }
 
+  selectedRequest = (comment) => {
+    this.props.selectedRequest(comment);
+    this.setState({ modalVisible: true });
+  }
+
+  closeModal = () => {
+    this.setState({ modalVisible: false });
+  }
+
   render() {
-    const { data } = this.props.comments;
+    const { data, selected } = this.props.comments;
     return (
       <div>
         <h1>Comments</h1>
+       { selected &&
+        <CommentModal
+          visible={this.state.modalVisible}
+          onCancel={this.closeModal}
+          modalTitle="Edit"
+          parentId={selected.parentId}
+          comment={selected}
+        />
+        }
         <List
           itemLayout="horizontal"
           dataSource={data}
@@ -75,6 +98,7 @@ class CommentsList extends Component {
               voteComment={this.voteComment}
               deleteComment={this.deleteComment}
               updateComment={this.updateComment}
+              selectedRequest={this.selectedRequest}
             />
           )}
         />
