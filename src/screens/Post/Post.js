@@ -75,7 +75,7 @@ class Post extends Component {
     const { selected, loading } = this.props;
     const { id } = this.props.match.params;
 
-    if (!selected && !loading) {
+    if (selected !== null && Object.keys(selected).length === 0 && !loading) {
       return (
         <NotFound />
       );
