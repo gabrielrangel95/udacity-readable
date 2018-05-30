@@ -1,14 +1,12 @@
 import axios from 'axios';
+const uuidv1 = require('uuid/v1');
 const url = 'https://powerful-depths-95152.herokuapp.com/';
 
-let token = localStorage.token
-if (!token)
-  token = localStorage.token = Math.random().toString(36).substr(-8)
 
 const api = axios.create({
   baseURL: `${url}`,
   headers: {
-    Authorization: token,
+    Authorization: uuidv1(),
   },
 });
 
