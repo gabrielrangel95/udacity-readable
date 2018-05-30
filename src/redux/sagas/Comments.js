@@ -53,8 +53,8 @@ export function* deleteComment(action) {
     console.log(action.payload);
     const response = yield call(api.delete, `/comments/${commentId}`);
     console.log(response);
-    yield put(CommentsActions.deleteSuccess());
     yield put(CommentsActions.getCommentsRequest(parentId));
+    yield put(CommentsActions.deleteSuccess());
   } catch (err) {
     yield put(CommentsActions.deleteFailure('Error on delete comment'));
   }

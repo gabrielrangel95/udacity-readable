@@ -67,6 +67,7 @@ class CommentsList extends Component {
 
   closeModal = () => {
     this.setState({ modalVisible: false });
+    this.props.selectedRequest(null);
   }
 
   render() {
