@@ -13,16 +13,8 @@ For persist the data consumed by the api, Redux and Redux-saga were used.
 For the UI components, the library Antd was used.
 
 ## Instructions: 
-First, you need start the local api:
+For start the front-end project:
 ```
-cd api-server // change directoty for api-server
-npm install // install packages
-node server // starts the server on http://localhost:8080
-```
-Then, start the front-end project:
-```
-cd .. // come back for the root directoty
-cd readable // change directoty for readable
 yarn // install packages
 yarn start // starts the front-end application on http://localhost:3000
 ```
