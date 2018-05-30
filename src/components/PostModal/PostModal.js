@@ -57,6 +57,19 @@ class PostModal extends Component {
     }
   }
 
+  // componentWillReceiveProps(nextProps) {
+  //   console.log(nextProps);
+  //   const { post } = nextProps;
+  //   if (post) {
+  //     nextProps.form.setFieldsValue({
+  //       title: post.title,
+  //       body: post.body,
+  //       author: post.author,
+  //       category: post.category,
+  //     });
+  //   }
+  // }
+
 
   handleSubmit = async (e) => {
     e.preventDefault();
@@ -130,7 +143,7 @@ class PostModal extends Component {
                   <Radio key={item.path} value={item.path} >{item.name}</Radio>
                 ))
               }
-               </Radio.Group>)}
+            </Radio.Group>)}
           </FormItem>
         </Form>
       </Modal>
