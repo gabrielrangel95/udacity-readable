@@ -39,12 +39,14 @@ class PostList extends Component {
 
   componentDidMount() {
     const { category } = this.props.match.params;
-    if (!category) {
+    if (!category || category === "all" ) {
       this.props.getPostsRequest();
     } else {
       this.props.filterCategoryRequest(category);
     }
   }
+
+  
 
   votePost = (postId, option) => {
     let updateType = 'allPosts';
