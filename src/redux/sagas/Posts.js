@@ -19,6 +19,7 @@ export function* getPosts() {
 
 export function* createPost(action) {
   try {
+    const { currentList } = action.payload;
     const response = yield call(api.post, '/posts', {
       author: action.payload.post.author,
       body: action.payload.post.body,
@@ -29,7 +30,12 @@ export function* createPost(action) {
     });
     console.log(response.data);
     yield put(PostsActions.createPostSuccess());
-    yield put(PostsActions.getPostsRequest());
+    if(currentList === 'all' || !currentList){
+      yield put(PostsActions.getPostsRequest());
+    }else{
+      yield put(PostsActions.filterCategoryRequest(currentList))
+    }
+    
   } catch (err) {
     yield put(PostsActions.createPostFailure('Error on create Post'));
   }

@@ -101,10 +101,11 @@ export const Creators = {
       error,
     },
   }),
-  createPostRequest: post => ({
+  createPostRequest: (post,currentList) => ({
     type: Types.CREATE_REQUEST,
     payload: {
       post,
+      currentList
     },
   }),
 
@@ -207,10 +208,11 @@ export const Creators = {
       error,
     },
   }),
-  updatePostRequest: post => ({
+  updatePostRequest: (post, currentList) => ({
     type: Types.UPDATE_REQUEST,
     payload: {
       post,
+      currentList
     },
   }),
 

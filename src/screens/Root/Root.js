@@ -50,9 +50,10 @@ class Root extends Component {
   }
 
   render() {
+    const { currentList, createModalVisible, title } = this.state
     return (
       <div>
-        <h1>{this.state.title}</h1>
+        <h1>{title}</h1>
         <div className="div-buttons">
           <Select className="div-select-filters" onChange={this.handleSelectChange} placeholder="Filter">
             <Option value="voteScore">voteScore</Option>
@@ -61,10 +62,10 @@ class Root extends Component {
           <Button onClick={() => this.openCreateModal()} className="div-button-new-post" type="danger">New Post</Button>
         </div>
         <PostList
-          currentList={this.state.currentList}
+          currentList={currentList}
         />
         <PostModal
-          visible={this.state.createModalVisible}
+          visible={createModalVisible}
           onCancel={this.onModalCancel}
           title="Create"
         />

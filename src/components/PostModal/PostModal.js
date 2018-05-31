@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 import { Modal, Form, Input, Radio, message } from 'antd';
 import { Creators as postsCreators } from '../../redux/ducks/Posts';
 
@@ -11,6 +12,9 @@ const FormItem = Form.Item;
 
 class PostModal extends Component {
   static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
     visible: PropTypes.bool.isRequired,
     onCancel: PropTypes.func.isRequired,
     form: PropTypes.shape({
@@ -45,8 +49,10 @@ class PostModal extends Component {
     post: null,
   }
 
+
   componentDidMount() {
     const { post } = this.props;
+    console.log(this.props)
     if (post) {
       this.props.form.setFieldsValue({
         title: post.title,
@@ -57,21 +63,8 @@ class PostModal extends Component {
     }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   console.log(nextProps);
-  //   const { post } = nextProps;
-  //   if (post) {
-  //     nextProps.form.setFieldsValue({
-  //       title: post.title,
-  //       body: post.body,
-  //       author: post.author,
-  //       category: post.category,
-  //     });
-  //   }
-  // }
-
-
   handleSubmit = async (e) => {
+    const currentList = this.props.match.params.category;
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
@@ -83,7 +76,7 @@ class PostModal extends Component {
               title: values.title,
               category: this.props.post.category,
             };
-            await this.props.updatePostRequest(post);
+            await this.props.updatePostRequest(post, currentList);
             message.success('Post updated succesfuly');
           } else {
             const post = {
@@ -92,7 +85,7 @@ class PostModal extends Component {
               category: values.category,
               title: values.title,
             };
-            await this.props.createPostRequest(post);
+            await this.props.createPostRequest(post, currentList);
             message.success('Post created succesfuly');
           }
           this.props.onCancel();
@@ -160,5 +153,5 @@ const mapDispatchToProps = dispatch =>
 
 const PostModalConnected = connect(mapStateToProps, mapDispatchToProps)(PostModal);
 const PostModalForm = Form.create()(PostModalConnected);
-
-export { PostModalForm as PostModal };
+const PostModalWithRouter = withRouter(PostModalForm)
+export { PostModalWithRouter as PostModal };
